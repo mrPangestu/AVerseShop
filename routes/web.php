@@ -15,6 +15,6 @@ use App\Http\Controllers\MainController;
 */
 
 Route::get('/tentang', [MainController::class, 'showAbout'])->name('about');
-Route::get('/beranda', [MainController::class, 'showMain'])->name('main');
+Route::get('/', [MainController::class, 'showMain'])->name('main');
 Route::get('/produk', [MainController::class, 'showProduct'])->name('product');
 Route::get('/kontak', [MainController::class, 'showContact'])->name('Contact');

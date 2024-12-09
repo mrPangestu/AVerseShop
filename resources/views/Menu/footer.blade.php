@@ -1,20 +1,21 @@
-
-<input type="checkbox" class="footer" name="footer" id="footer" >
-<div class="container-footer container-fluid position-fixed bottom-0 pt-3 px-0" style="background: gray">
+<input type="checkbox" class="footer" name="footer" id="footer">
+<div class="container-footer container-fluid position-fixed bottom-0 px-0">
     <div class="row pb-2">
+        <!-- Tautan Cepat (akan disembunyikan di layar kecil) -->
         <div class="col order-last ms-5 ps-5">
             <h6>Tautan Cepat</h6>
             <ul class="list-unstyled">
-                <li>> <a>Beranda</a></li>
-                <li>> <a>Tentang</a></li>
-                <li>> <a>Produk</a></li>
-                <li>> <a>Kontak</a></li>
-                
+                <li><a href="{{ route('main') }}">Beranda</a></li>
+                <li><a href="{{ route('about') }}">Tentang</a></li>
+                <li><a href="{{ route('product') }}">Produk</a></li>
+                <li><a href="{{ route('Contact') }}">Kontak</a></li>
             </ul>
         </div>
+        
+        <!-- Hubungi Kami -->
         <div class="col">
             Hubungi Kami
-            <div class="row row-cols-1">
+            <div class="row row-cols-1 d-flex justify-content-start">
                 <div class="col my-1">
                     <div class="row">
                         <div class="col-1 d-flex justify-content-center align-items-center">
@@ -45,17 +46,17 @@
                         </div>
                     </div>
                 </div>
-               
-
             </div>
-           
         </div>
-        <div class="col order-first d-flex justify-content-center align-items-center">
-            <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="120" class="d-flex justify-content-center align-items-center">
+
+        <!-- Logo (akan ditampilkan di tengah) -->
+        <div class="col-4 order-first d-flex justify-content-center align-items-center" >
+            <img src="/img/logo.jpg" alt="" class="">
         </div>
     </div>
-    <div class="container-fluid py-2" style="background: aliceblue">
-        <h6 style="text-align: center">Copyright : Anggrek Bandung</h3>
+
+    <!-- Footer bawah -->
+    <div class="container-fluid py-1" style="background: #891b80; color:white ">
+        <h6 class="copyright" style="text-align: center">Copyright : Anggrek Bandung</h6>
     </div>
-    
 </div>

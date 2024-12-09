@@ -1,6 +1,6 @@
 @extends('Menu.main')
 @section('content')
-<div class="container-main container-fluid d-flex justify-content-center align-items-center">
+<div class="container-main container-fluid d-flex justify-content-center align-items-center pb-5">
     <div class="container-md " style=" width:60%;">
         <div class="row m-0">
             <!-- Kolom dengan Google Maps -->

@@ -3,13 +3,19 @@
     transform: scale(2);
     right: 30px;
     bottom: 180px;
+   
     z-index: 10;
     transition: 0.5s ease;
+
     
 }
 
 .container-footer{
+    background-image: url("/img/footer.jpg");
+    background-size:cover;
+    background-position: center;
     height: 210px;
+    padding-top: 25px;
     opacity: 100;
     z-index: 9;
     transition: height 0.5s ease-in, opacity 1s ease-out;
@@ -17,13 +23,64 @@
 
 
   /* Ketika checkbox dicentang, ubah ukuran gambar */
-  input[type="checkbox"]:checked ~ .container-footer {
+  .footer[type="checkbox"]:checked ~ .container-footer {
     height: 0;
-    opacity: 0;
-    
-    
+    opacity: 0; 
   }
-  input[type="checkbox"]:checked {
+  .footer[type="checkbox"]:checked {
     bottom: 50px;
     right: 30px;
   }
+  .footer[type="checkbox"]:checked ~ .container-main {
+    height: calc(100vh - 60px);
+  }
+
+  /* Default: Tampilkan tautan cepat untuk desktop */
+.container-footer .col {
+  display: block;
+}
+
+.container-footer img {
+  padding: 0;
+  margin: 0;
+  width: 30%; 
+  /* Memastikan gambar tidak melampaui lebar kolom */
+  height: auto;     /* Menjaga rasio aspek gambar */
+}
+/* Media query untuk tablet dan perangkat mobile */
+@media (max-width: 768px) {
+  /* Sembunyikan kolom "Tautan Cepat" pada layar kecil */
+  .container-footer .col.order-last {
+      display: none;
+  }
+}
+
+/* Media query untuk perangkat mobile (paling kecil) */
+@media (max-width: 576px) {
+  /* Tampilkan footer dengan lebih rapat dan ubah ukuran logo */
+  .container-footer img {
+      width: 60%;
+  }
+  .container-footer {
+      height: 160px;
+      padding-top: 30px;
+  }
+  .container-main {
+    height: calc(100vh - 110px);
+  }
+  .container-footer .col{
+    font-size: 10;
+  }
+  .copyright{
+    font-size: 10;
+  }
+  .footer{
+    bottom: 135px;
+    right: 30px;
+    transform: scale(1.3);
+  }
+  .footer[type="checkbox"]:checked {
+    bottom: 30px;
+    right: 30px;
+  }
+}

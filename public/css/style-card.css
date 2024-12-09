@@ -1,0 +1,57 @@
+.card {
+    position: relative;
+    opacity: 0;
+    height: 300px;
+    transform: scale(0.5) translateY(100px);
+    transition: opacity 0.8s ease-out, transform 0.5s ease-out, scale 0.4s;
+    margin-bottom: 60px;
+    
+}
+
+.card.animate {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    
+}
+
+
+
+.card-background{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0;
+    
+    background-size: cover;
+    background-position: center;
+    filter: brightness(.9) contrast(1);
+    transform-origin: bottom;
+    transform: scale(1) translateZ(0);
+    transition: .3s ease;
+}
+
+
+
+.card:hover .card-background {
+    transform: scale(1) translateZ(0);
+    background-size: cover;
+}
+.row:hover > .card:not(:hover){
+    transform: scale(.9);
+}
+.row:hover > .card:not(:hover) .card-background,
+.row:hover > .card:not(:hover) .card-body{
+    filter: brightness(0.5) contrast(1.2) blur(10px);
+}
+.card-body {
+    text-shadow: 2px 2px 5px #888;
+    top: 50%;
+    left: 0;
+    padding: 25px;
+    position: relative;
+    color: white;
+}
+.card-body button{
+    cursor: pointer;
+}
