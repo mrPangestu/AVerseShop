@@ -1,0 +1,29 @@
+.footer {
+    position: absolute;
+    transform: scale(2);
+    right: 30px;
+    bottom: 180px;
+    z-index: 10;
+    transition: 0.5s ease;
+    
+}
+
+.container-footer{
+    height: 210px;
+    opacity: 100;
+    z-index: 9;
+    transition: height 0.5s ease-in, opacity 1s ease-out;
+}
+
+
+  /* Ketika checkbox dicentang, ubah ukuran gambar */
+  input[type="checkbox"]:checked ~ .container-footer {
+    height: 0;
+    opacity: 0;
+    
+    
+  }
+  input[type="checkbox"]:checked {
+    bottom: 50px;
+    right: 30px;
+  }
