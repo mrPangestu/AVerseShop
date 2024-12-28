@@ -1,11 +1,12 @@
 .card {
     position: relative;
     opacity: 0;
-    height: 300px;
+    width: 15rem !important; /* Ubah ukuran lebar kartu sesuai kebutuhan */
+    height: 300px; /* Tinggi tetap */
     transform: scale(0.5) translateY(100px);
     transition: opacity 0.8s ease-out, transform 0.5s ease-out, scale 0.4s;
     margin-bottom: 60px;
-    
+    border-radius: 10px;
 }
 
 .card.animate {
@@ -22,7 +23,7 @@
     right: 0;
     top: 0;
     left: 0;
-    
+    border-radius: 1px;
     background-size: cover;
     background-position: center;
     filter: brightness(.9) contrast(1);

@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="/css/style-footer.css">
     <link rel="stylesheet" href="/css/style-navbar.css">
     <link rel="stylesheet" href="/css/style-card.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style-cart.css">
     <title>Anggrek Bandung</title>
     <style>
         body {
@@ -52,9 +56,6 @@
             background: #555; /* Warna penggeser saat disorot */
         }
 
-
-
-
         .input {
             display: block;
             width: 100%;
@@ -64,56 +65,44 @@
         }
         @media (max-width: 576px) {
             .container-main {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
                 height: calc(100vh - 220px);
+            }
+            .card-row {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+            .card {
+                width: 48% !important;
+                margin: 1% !important;
+            }
+            .contact-container {
+                width: 90% !important;
+                padding-top: 250px;
+                margin-bottom: 50px;
+             /* Lebar container menjadi 90% */
+            }
+            .contact-row .col-12 {
+                width: 100%; /* Kolom memenuhi lebar container */
+                /* Beri jarak antar kolom */
+            }
+            #map-container iframe {
+                height: 300px; /* Tinggi iframe pada mobile */
             }
         }
     </style>
 </head>
 <body>
     <div id="content"></div>
-    <div id="modal"></div>
     @yield('content')
 
 
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/7b730c13ab.js" crossorigin="anonymous"></script>   
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const cards = document.querySelectorAll(".card");
-    
-            const observerOptions = {
-                threshold: 0.1, // Animasi dipicu jika 10% elemen terlihat
-            };
-    
-            const observerCallback = (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Tambahkan kelas animasi saat elemen masuk viewport
-                        entry.target.classList.add("animate");
-                    } else {
-                        // Hapus kelas animasi saat elemen keluar dari viewport
-                        entry.target.classList.remove("animate");
-                    }
-                });
-            };
-    
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
-            cards.forEach(card => observer.observe(card));
-        });
+    @stack('scripts')
+    <script src="{{ mix('js/app.js') }}"></script>
 
-
-
-        function showModal() {
-            // Load modal.html into #modal-container
-            $("#modal-container").load("modal.html", function () {
-                const modal = new bootstrap.Modal(document.getElementById('myModal'), {});
-                modal.show();
-            });
-        }
-    </script>
-    
-
-    
 </body>
 </html>

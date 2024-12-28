@@ -14,12 +14,14 @@ class MainController extends Controller
         return view('Halaman.tentang');
     }
 
-    public function showProduct(){
-        return view('Halaman.produk');
-    }
+  
     public function showContact(){
         return view('Halaman.kontak');
     }
+    public function showCart(){
+        return view('Halaman.keranjang');
+    }
+
 }
 
 

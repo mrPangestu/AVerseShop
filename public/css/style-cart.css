@@ -1,0 +1,105 @@
+.cart-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+  }
+  .cart-header, .cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .cart-footer {
+    border-top: 1px solid #eaeaea;
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .cart-item:last-child {
+    margin-bottom: 0;
+  }
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    margin-right: 15px;
+  }
+  .cart-item-info {
+    flex-grow: 1;
+  }
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+  }
+  .quantity-controls button {
+    border: 1px solid #eaeaea;
+    background: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .quantity-controls input {
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+  }
+  .price, .total-price {
+    font-weight: bold;
+  }
+  .select-all {
+    display: flex;
+    align-items: center;
+  }
+  .btn-checkout {
+    background: #ee4d2d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-checkout:hover {
+    background: #d43a1c;
+  }
+  .btn-back {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #000;
+    cursor: pointer;
+  }
+  .btn-back:hover {
+    color: #d43a1c;
+  }
+  @media (max-width: 768px) {
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .cart-item img {
+      margin-bottom: 10px;
+    }
+    .cart-item-info {
+      text-align: left;
+      width: 100%;
+    }
+    .quantity-controls {
+      margin-top: 10px;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  @media (max-width: 576px) {
+    .cart-container {
+      padding: 15px;
+    }
+    .btn-checkout {
+      width: 100%;
+    }
+  }

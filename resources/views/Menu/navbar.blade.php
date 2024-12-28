@@ -30,9 +30,19 @@
 
             <!-- Shopping Cart and Login -->
             <div class="d-flex align-items-center">
-                <i class="fa-solid fa-cart-shopping me-3"></i>
-                <button class="btn btn-sm btn-outline-dark" type="button">Login</button>
+                <a href="{{ route('cart.index') }}"><i class="fa-solid fa-cart-shopping me-3"></i></a>
+
+                @if(Auth::check())
+                <form action="{{ route('logout') }}" method="POST" class="my-0 mx-1">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-danger">Logout</button>
+                </form>
+                @else
+                    <a class="btn btn-sm btn-outline-dark" type="button"  href="{{ route('login') }}">Login</a>
+                @endif
+                
             </div>
+
         </div>
     </div>
 </nav>
