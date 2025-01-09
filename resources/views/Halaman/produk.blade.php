@@ -1,16 +1,16 @@
 @extends('Menu.main')
 
 @section('content')
+@if (session('success'))
+    <div class="alert alert-success" id="success-alert" style="z-index: 101">{{ session('success') }}</div>
+@endif
 <div class="container-main container-fluid px-5 d-flex justify-content-center align-items-start">
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
     <div class="row mx-5 overflow-hidden d-flex justify-content-center">
         <!-- Tombol Tambah Produk untuk Admin -->
         @if (Auth::check() && Auth::id() == 1)
             <div class="card mx-3 p-0 align-items-center justify-content-center" style="width: 15rem;">
-                <a href="{{ route('products.create') }}" class="btn btn-primary my-3" style="font-size:20px;">Tambah Produk</a>
+                <a href="{{ route('produk.create') }}" class="btn btn-primary my-3" style="font-size:20px;">Tambah Produk</a>
             </div>
         @endif
 
@@ -60,11 +60,23 @@
         }, { threshold: 0.1 });
 
         cards.forEach(card => observer.observe(card));
+
+
+        const successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            setTimeout(() => {
+                successAlert.style.transition = "opacity 0.5s ease";
+                successAlert.style.opacity = "0";
+
+                // Hapus elemen setelah efek transisi selesai (0.5 detik)
+                setTimeout(() => successAlert.remove(), 500);
+            }, 2000); // Interval waktu 2 detik sebelum mulai menghilang
+        }
     });
 
     // Fungsi untuk menambahkan produk ke keranjang
     document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('.add-to-cart');
+        const buttons = document.querySelectorAll('.add-to-cart');
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
@@ -94,7 +106,8 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan.');
+                window.location.href = '/login';
+                return;
             });
         });
     });

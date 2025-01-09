@@ -20,18 +20,20 @@ use App\Http\Controllers\CartController;
 Route::get('/', [MainController::class, 'showMain'])->name('main');
 Route::get('/tentang', [MainController::class, 'showAbout'])->name('about');
 Route::get('/kontak', [MainController::class, 'showContact'])->name('Contact');
+Route::get('/produk', [ProductController::class, 'showProduct'])->name('product');
+Route::resource('products', ProductController::class);
 
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/keranjang', [CartController::class, 'store'])->name('cart.store');
-    Route::put('/keranjang/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/keranjang/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
-    Route::post('/produk/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/produk/add', [CartController::class, 'addToCart'])->name('cart.add')->middleware('auth');
     Route::post('/keranjang/delete', [CartController::class, 'deleteCartItem'])->name('cart.delete');
     Route::post('/keranjang/update/{cartId}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
-    
+    Route::get('/produk/create', [ProductController::class, 'create'])->name('produk.create');
+    Route::get('/produk/{id}/edit', [ProductController::class, 'edit'])->name('produk.edit');
+    Route::put('/produk/{id}', [ProductController::class, 'update'])->name('produk.update');
+    Route::delete('/produk/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 });
 
@@ -42,6 +44,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/produk', [ProductController::class, 'showProduct'])->name('product');
-Route::resource('products', ProductController::class);
+
 

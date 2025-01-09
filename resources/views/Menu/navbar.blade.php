@@ -30,7 +30,11 @@
 
             <!-- Shopping Cart and Login -->
             <div class="d-flex align-items-center">
-                <a href="{{ route('cart.index') }}"><i class="fa-solid fa-cart-shopping me-3"></i></a>
+                @if (Auth::check() && Auth::id() == 1)
+                    
+                @else
+                    <a href="{{ route('cart.index') }}"><i class="fa-solid fa-cart-shopping me-3"></i></a>
+                @endif
 
                 @if(Auth::check())
                 <form action="{{ route('logout') }}" method="POST" class="my-0 mx-1">

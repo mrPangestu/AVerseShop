@@ -24,12 +24,12 @@
 
         <div class="cart-item d-flex align-items-center mb-3">
             <input type="checkbox" class="cart-checkbox" data-cart-id="{{ $cart->id }}">
-            <img src="{{ asset($cart->product->image) }}" alt="{{ $cart->product->name }}">
+            <img src="{{ asset('storage/' . $cart->product->image) }}" alt="{{ $cart->product->name }}">
             <div class="cart-item-info">
                 <h6 class="mb-1">{{ $cart->product->product_name }}</h6>
                 <div class="text-muted">Varian: {{ $cart->variant }}</div>
             </div>
-            <div class="price me-3">Rp {{ number_format($cart->total_price, 0, ',', '.') }}</div>
+            <div class="price me-3">Rp {{ number_format($cart->price, 0, ',', '.') }}</div>
             <div class="quantity-controls">
                 <button class="decrease-quantity" data-cart-id="{{ $cart->id }}">-</button>
                 <span id="quantity-{{ $cart->id }}">{{ $cart->quantity }}</span>
@@ -51,7 +51,7 @@
             </div>
             <div class="d-flex align-items-center flex-wrap mt-2">
                 <span class="me-3">Total: <span class="fw-bold">Rp {{ number_format($carts->sum('total_price'), 0, ',', '.') }}</span></span>
-                <button class="btn btn-primary">Checkout</button>
+                <button id="checkout-button" class="btn btn-primary">Checkout</button>
             </div>
         </div>
     @else
@@ -73,8 +73,7 @@ function formatRupiah(amount) {
 
 document.addEventListener('DOMContentLoaded', function () {
     // Untuk tombol (+) dan (-)
-     // Untuk tombol (-) dan (+)
-     const decreaseButtons = document.querySelectorAll('.decrease-quantity');
+    const decreaseButtons = document.querySelectorAll('.decrease-quantity');
     const increaseButtons = document.querySelectorAll('.increase-quantity');
 
     decreaseButtons.forEach(button => {
@@ -242,6 +241,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectAllCheckbox.indeterminate = true; // "Pilih Semua" menjadi indeterminate
             }
         });
+    });
+
+
+    const checkoutButton = document.getElementById('checkout-button');
+    const cartItems = document.querySelectorAll('.cart-item');
+
+    // Ganti nomor WhatsApp dengan nomor penerima
+    const whatsappNumber = '6281296438447'; // Format: 62 untuk Indonesia
+
+    checkoutButton.addEventListener('click', function () {
+        let message = '*Checkout Produk:*\n\n';
+
+        cartItems.forEach(item => {
+            const checkbox = item.querySelector('.cart-checkbox');
+            if (checkbox.checked) {
+                const productName = item.querySelector('.cart-item-info h6').textContent.trim();
+                const quantity = item.querySelector('.quantity-controls span').textContent.trim();
+                message += `- ${productName} (Qty: ${quantity})\n`;
+            }
+        });
+
+        if (message === '*Checkout Produk:*\n\n') {
+            alert('Pilih setidaknya satu produk untuk checkout.');
+            return;
+        }
+
+        // Tambahkan total harga jika diperlukan
+        const totalPrice = document.querySelector('.cart-footer .fw-bold').textContent.trim();
+        message += `\n*Total Harga:* ${totalPrice}\n\nTerima kasih!`;
+
+        // Encode pesan untuk URL
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
     });
 
 

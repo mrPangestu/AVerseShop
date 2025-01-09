@@ -16,63 +16,79 @@ class ProductController extends Controller
     // Form tambah produk baru
     public function create()
     {
-        return view('products.create');
+        return view('Halaman.tambah-produk');
     }
 
     // Simpan produk baru
+
+
+    
     public function store(Request $request)
     {
         // Validasi data
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+        $request->validate([
+            'product_name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'description' => 'nullable|string',
             'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Simpan gambar jika ada
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-            $validated['image'] = '/storage/' . $imagePath;
-        }
+        // Upload gambar
+        $imagePath = $request->file('image')->store('product_images', 'public');
 
-        // Simpan produk
-        Product::create($validated);
+        // Simpan data ke database
+        Product::create([
+            'product_name' => $request->product_name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'stock' => $request->stock,
+            'image' => $imagePath,
+        ]);
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('product')->with('success', 'Produk berhasil ditambahkan!');
     }
+    
 
     // Form edit produk
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        return view('Halaman.edit-produk', compact('product'));
     }
 
-    // Update produk
     public function update(Request $request, $id)
     {
         // Validasi data
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+        $request->validate([
+            'product_name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'description' => 'nullable|string|max:1000', // Ubah ke nullable
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+    
         $product = Product::findOrFail($id);
-
-        // Simpan gambar jika ada
+    
+        // Jika gambar baru diunggah, hapus gambar lama dan simpan yang baru
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-            $validated['image'] = '/storage/' . $imagePath;
+            if ($product->image) {
+                \Storage::disk('public')->delete($product->image);
+            }
+    
+            $imagePath = $request->file('image')->store('product_images', 'public');
+            $product->image = $imagePath;
         }
-
-        $product->update($validated);
-
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
+    
+        // Update data produk
+        $product->update([
+            'product_name' => $request->product_name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'description' => $request->description, // Tetap update meskipun null
+        ]);
+    
+        return redirect()->route('product', $product->id)->with('success', 'Produk berhasil diperbarui!');
     }
 
     // Hapus produk
@@ -80,14 +96,14 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Hapus file gambar jika ada
+        // Hapus gambar dari penyimpanan jika ada
         if ($product->image) {
-            $imagePath = str_replace('/storage/', '', $product->image);
-            \Storage::disk('public')->delete($imagePath);
+            \Storage::disk('public')->delete($product->image);
         }
 
+        // Hapus produk dari database
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
+        return redirect()->route('product')->with('success', 'Produk berhasil dihapus!');
     }
 }
